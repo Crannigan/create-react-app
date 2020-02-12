@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Square(props)  {
     return (
         <button className="square" onClick={props.onClick}>
-            {props.value}
+            <div className="squareTXT">{props.value}</div>
         </button>
     );
 }
@@ -102,7 +103,8 @@ class Game extends React.Component {
 
     return (
       <div className="game">
-        <div className="game-board">
+        <div className="match-history col-3"></div>
+        <div className="game-board col-5">
           <Board 
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
