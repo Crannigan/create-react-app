@@ -93,13 +93,14 @@ class Game extends React.Component {
     const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) =>   {
-        const desc = move ? 'Go to move #' + move : 'Restart Game';
+        const desc = move ? 'Move #' + move + ' (1, 1)' : 'Restart Game';
         return  (
-            <li key={move}>
-                <button onClick={() => this.jumpTo(move)}>{desc}</button>
+            <li className="move-but-list-item" key={move}>
+                <button className="btn btn-info move-but" onClick={() => this.jumpTo(move)}>{desc}</button>
             </li>
         )
     });
+    
 
     let status;
     if(winner)  {
@@ -110,16 +111,17 @@ class Game extends React.Component {
 
     return (
       <div className="game">
-        <div className="match-history col-3"></div>
+        <div className="padding-bar col-1"></div>
+        <div className="match-history col-2"></div>
         <div className="game-board col-5">
           <Board 
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
           />
         </div>
-        <div className="game-info">
-          <div>{status}</div>
-          <ol>{moves}</ol>
+        <div className="game-info col-2">
+          <div className="status-bar">{status}</div>
+          <ol className="moves-list">{moves}</ol>
         </div>
       </div>
     );

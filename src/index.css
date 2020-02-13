@@ -1,5 +1,5 @@
 html    {
-    background-color: #3A494E;
+    background-color: black;
 }
 
 body {
@@ -34,7 +34,7 @@ ol, ul {
   padding: 0;
   text-align: center;
   width: 250px;
-  color: #5B4962;
+  color: #a27fba;
 }
 
 .square:focus {
@@ -49,14 +49,43 @@ ol, ul {
   margin-top: 5%;
   display: flex;
   flex-direction: row;
-  background-color: #3A494E;
+  background-color: black;
 }
 
 .game-info {
   margin-left: 20px;
+  background: #B2DFEE;
+  border: 10px solid #999;
+  border-radius: 20px;
 }
 
 
 .squareTXT  {
     margin-top: -30px;
+}
+
+.status-bar {
+    text-align: center;
+    font-size: 2em;
+}
+
+.match-history  {
+    background: #B2DFEE;
+    margin-right: 40px;
+    border: 10px solid #999;
+    border-radius: 20px;
+}
+
+.moves-list {
+    list-style: none;
+    text-align: center;
+}
+
+.move-but-list-item   {
+    padding-top: 15px;
+    padding-right: 30px;
+}
+
+.move-but   {
+    width: 90%;
 }
