@@ -60,7 +60,7 @@ class Game extends React.Component {
 
     handleClick(i)  {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
-        const current = this.state.isAsc ? history[history.length - 1] : history.length === 0 ? history[0] : history[1];
+        const current = this.state.isAsc ? history[history.length - 1] : history.length === 0 ? history[0] : history[history.length - this.state.stepNumber];
         const squares = current.squares.slice();
         if(calculateWinner(squares) || squares[i])  {
             return;
@@ -80,7 +80,7 @@ class Game extends React.Component {
               squares: squares,
               moveRow: ( Math.floor(i / 3) + 1 ),
               moveCol: ( (i % 3) + 1 ),
-            }]).concat(history.slice(1,history.length)),
+            }]).concat(history.slice(history.length-this.state.stepNumber,history.length)),
           });
         }
 
@@ -91,19 +91,22 @@ class Game extends React.Component {
     }
 
     jumpTo(step)    {
-        if(step === 0)  {
+        this.setState({
+          stepNumber: step,
+          xIsNext: (step % 2) === 0,
+        })
+        if(step === 0 || (!this.state.isAsc && step === this.state.history.length))  {
             this.setState({
                 history:    [{
                     squares: Array(9).fill(null),
                     moveCol: null,
                     moveRow: null,
-                }]
+                }],
+                stepNumber: 0,
+                xIsNext: true,
             })
         }
-        this.setState({
-            stepNumber: step,
-            xIsNext: (step % 2) === 0,
-        })
+        
     }
 
     changeSort()  {
@@ -125,9 +128,10 @@ class Game extends React.Component {
 
     const moves = history.map((step, move) =>   {
         const desc = move ? 'Move #' + (this.state.isAsc ? move : (this.state.history.length) - move) + ' (' + history[move].moveRow + ', ' + history[move].moveCol + ')' : 'Restart Game';
+        const desc_move = this.state.isAsc ? move : (this.state.history.length - move);
         return  (
             <li className="move-but-list-item" key={move}>
-                <button className="btn btn-info move-but" onClick={() => this.jumpTo(move)}>{desc}</button>
+                <button className="btn btn-info move-but" onClick={() => this.jumpTo(desc_move)}>{desc}</button>
             </li>
         )
     });
