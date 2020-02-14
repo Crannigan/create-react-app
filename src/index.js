@@ -60,7 +60,6 @@ class Game extends React.Component {
 
     handleClick(i)  {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
-        //const current = history[history.length - 1];
         const current = this.state.isAsc ? history[history.length - 1] : history.length === 0 ? history[0] : history[1];
         const squares = current.squares.slice();
         if(calculateWinner(squares) || squares[i])  {
@@ -113,7 +112,6 @@ class Game extends React.Component {
       let restartMove = this.state.history.slice(0,1);
       let newHistory = this.state.history.slice(1,this.state.history.length + 1);
       newHistory = restartMove.concat(newHistory.reverse());
-      console.log(newHistory);
       this.setState({
         history: newHistory,
       })
@@ -122,7 +120,6 @@ class Game extends React.Component {
 
   render() {
     const history = this.state.history;
-    //const current = history[this.state.stepNumber];
     const current = this.state.isAsc ? history[this.state.stepNumber] : this.state.stepNumber === 0 ? history[0] : history[this.state.history.length - this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
