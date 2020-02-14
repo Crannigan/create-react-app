@@ -155,7 +155,7 @@ class Game extends React.Component {
           <ol className="moves-list">{moves}</ol>
           <div className="moves-footer row">
             <div className="sort-moves col-3" onClick={() => this.changeSort()}>Sort {this.state.isAsc ? '\u2191' : '\u2193'}</div>
-            <div className="view-text col-9">Viewing Move: hold</div>
+            <div className="view-text col-9">{this.state.stepNumber === 0 ? "No Move Yet" : "Viewing Move: " + this.state.stepNumber}</div>
           </div>
         </div>
       </div>
