@@ -61,6 +61,7 @@ ol, ul {
 .status-bar {
     text-align: center;
     font-size: 2em;
+    
 }
 
 .match-history  {
@@ -82,4 +83,29 @@ ol, ul {
 
 .move-but   {
     width: 90%;
+}
+
+.moves-footer {
+  position: absolute;
+  bottom: 0;
+  background: #a27fba;
+  width: 100%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  height: 5%;
+}
+
+.sort-moves {
+  color: white;
+  text-align: center;
+  top: 15%;
+  border-right: white 2px solid;
+  height: 80%;
+  cursor: pointer;
+}
+
+.view-text  {
+  float: right;
+  top: 15%;
+  text-align: center;
 }
