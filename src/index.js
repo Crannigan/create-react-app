@@ -59,8 +59,10 @@ class Game extends React.Component {
     }
 
     handleClick(i)  {
-        const history = this.state.history.slice(0, this.state.stepNumber + 1);
-        const current = this.state.isAsc ? history[history.length - 1] : history.length === 0 ? history[0] : history[history.length - this.state.stepNumber];
+        //const history = this.state.history.slice(0, this.state.stepNumber + 1);
+        //console.log(this.state.stepNumber, " : ", this.state.history.length);
+        const history = this.state.isAsc ? this.state.history.slice(0, this.state.stepNumber + 1) : this.state.history.slice(0,1).concat(this.state.history.slice(this.state.history.length - this.state.stepNumber));
+        const current = this.state.isAsc ? history[history.length - 1] : history.length === 1 ? history[0] : history[1];
         const squares = current.squares.slice();
         if(calculateWinner(squares) || squares[i])  {
             return;
