@@ -137,7 +137,6 @@ class Game extends React.Component {
     const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) =>   {
-        console.log(move)
         const desc = move ? 'Move #' + (this.state.isAsc ? move : (this.state.history.length) - move) + ' (' + history[move].moveRow + ', ' + history[move].moveCol + ')' : 'Restart Game';
         const desc_move = this.state.isAsc ? move : (this.state.history.length - move);
         return  (
