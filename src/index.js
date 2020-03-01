@@ -4,20 +4,29 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Square(props)  {
-    return (
+    if(!props.winner)  {
+      return (
         <button className="square" onClick={props.onClick}>
-            <div className="squareTXT">{props.value}</div>
+        <div className="squareTXT">{props.value}</div>
         </button>
-    );
+      );
+    } else  {
+      return (
+        <button className="square win-tile" onClick={props.onClick}>
+        <div className="squareTXT">{props.value}</div>
+        </button>
+      );
+    }
 }
 
 class Board extends React.Component {
-  renderSquare(i) {
+  renderSquare(i, isWinner) {
     return (
         <Square 
             key={i}
             value={this.props.squares[i]} 
             onClick={() => this.props.onClick(i)}
+            winner = {isWinner}
         />
     );
   }
@@ -25,10 +34,16 @@ class Board extends React.Component {
   renderBoard() {
     let i, j;
     const items = [];
-    for(i = 0; i < 3; i++)  {
-      for(j = 0; j < 3; j++)  {
-        items.push(this.renderSquare((i * 3) + j));
+    const winner = winnerTiles(this.props.squares);
+    const winTiles = winnerTiles(this.props.squares);
+    for(i = 0; i < 9; i++)  {
+      let isWinner = false;
+      if(winner != null)  {
+        if(winTiles[0] == i || winTiles[1] == i || winTiles[2] == i) {
+          isWinner = true;
+        }
       }
+      items.push(this.renderSquare(i, isWinner));
     }
 
     return items;
@@ -134,7 +149,7 @@ class Game extends React.Component {
   render() {
     const history = this.state.history;
     const current = this.state.isAsc ? history[this.state.stepNumber] : this.state.stepNumber === 0 ? history[0] : history[this.state.history.length - this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
+    let winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) =>   {
         const desc = move ? 'Move #' + (this.state.isAsc ? move : (this.state.history.length) - move) + ' (' + history[move].moveRow + ', ' + history[move].moveCol + ')' : 'Restart Game';
@@ -218,6 +233,29 @@ function calculateWinner(squares) {
       const [a, b, c] = lines[i];
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
         return squares[a];
+      }
+    }
+    return null;
+  }
+
+  function winnerTiles(squares) {
+    let win = calculateWinner(squares);
+    if(win) {
+      const lines = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+      ];
+      for (let i = 0; i < lines.length; i++) {
+        const [a, b, c] = lines[i];
+        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+          return [a,b,c];
+        }
       }
     }
     return null;
