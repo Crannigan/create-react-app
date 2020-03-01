@@ -55,6 +55,7 @@ class Game extends React.Component {
             stepNumber: 0,
             xIsNext: true,
             isAsc: true,
+            gameHistory: [],
         };
     }
 
@@ -88,6 +89,15 @@ class Game extends React.Component {
           stepNumber: history.length,
           xIsNext: !this.state.xIsNext,
         });
+
+        if(calculateWinner(squares))  {
+          let gameWinner = [{
+            winner: (this.state.stepNumber % 2) === 0 ? 'X' : 'O',
+          }]
+          this.setState({
+            gameHistory: gameWinner.concat(this.state.gameHistory)
+          });
+        }
     }
 
     jumpTo(step)    {
@@ -127,6 +137,7 @@ class Game extends React.Component {
     const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) =>   {
+        console.log(move)
         const desc = move ? 'Move #' + (this.state.isAsc ? move : (this.state.history.length) - move) + ' (' + history[move].moveRow + ', ' + history[move].moveCol + ')' : 'Restart Game';
         const desc_move = this.state.isAsc ? move : (this.state.history.length - move);
         return  (
@@ -135,6 +146,17 @@ class Game extends React.Component {
             </li>
         )
     });
+
+    const gameHistory = [];
+    var i;
+    var limitHistory = this.state.gameHistory.length > 10 ? 10 : this.state.gameHistory.length;
+    for(i = 0; i < limitHistory; i++)  {
+      let desc = this.state.gameHistory[i].winner ? (this.state.gameHistory[i].winner + ' won') : 'No Winner';
+      desc = (i+1).toString() + ' Games Ago: ' + desc;
+      gameHistory.push(
+        <li className="game-history-item">{desc}</li>
+      );
+    }
     
 
     let status;
@@ -146,10 +168,15 @@ class Game extends React.Component {
         status = (this.state.xIsNext ? 'X' : 'O') + " TURN";
     }
 
+    let gameHistoryTitle = 'Game History';
+
     return (
       <div className="game">
         <div className="padding-bar col-1"></div>
-        <div className="match-history col-2"></div>
+        <div className="match-history col-2">
+          <div className="game-history-title"><h2>{gameHistoryTitle}</h2></div>
+          <ol className="games-history"><b>{gameHistory}</b></ol>
+        </div>
         <div className="game-board col-5">
           <Board 
             squares={current.squares}

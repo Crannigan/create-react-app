@@ -109,3 +109,23 @@ ol, ul {
   text-align: center;
   color: white;
 }
+
+.games-history  {
+  list-style: none;
+  padding-right: 10%;
+  padding-left: 10%;
+}
+
+.game-history-item  {
+  background-color: #a27fba;
+  width: 100%;
+  margin-top: 8%;
+  height: 4vh;
+  border-radius: 10px;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.game-history-title {
+  text-align: center;
+}
